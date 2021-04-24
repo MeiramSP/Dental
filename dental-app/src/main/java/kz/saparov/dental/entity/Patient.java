@@ -32,13 +32,15 @@ public class Patient {
 	@Column(name="address", length = 150)
 	private String address;
 	
-	@Column(name="birth_date", columnDefinition = "DATE")
+	@Column(name="birth_date")
 	private LocalDate birthDate;
 	
 	
 	@OneToMany(mappedBy = "patient", fetch = FetchType.LAZY, cascade=CascadeType.ALL)
-	//@JsonIgnore
 	private List<Tooth> teeth;
+	
+	@OneToMany(mappedBy = "patient", fetch = FetchType.LAZY, cascade=CascadeType.ALL)
+	private List<Appointment> appointments; 
 	
 	public Patient() {}
 	
@@ -98,4 +100,13 @@ public class Patient {
 	public void setTeeth(List<Tooth> teeth) {
 		this.teeth = teeth;
 	}
+
+	public List<Appointment> getAppointments() {
+		return appointments;
+	}
+
+	public void setAppointments(List<Appointment> appointments) {
+		this.appointments = appointments;
+	}
+	
 }

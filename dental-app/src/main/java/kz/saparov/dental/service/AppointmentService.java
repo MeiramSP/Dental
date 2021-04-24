@@ -3,30 +3,33 @@ package kz.saparov.dental.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import kz.saparov.dental.entity.Appointment;
 import kz.saparov.dental.entity.Patient;
-import kz.saparov.dental.entity.Tooth;
 import kz.saparov.dental.exception.PatientNotFoundException;
+import kz.saparov.dental.repository.AppointmentRepository;
 import kz.saparov.dental.repository.PatientRepository;
-import kz.saparov.dental.repository.ToothRepository;
 
 @Service
-public class ToothService {
-
-	private ToothRepository toothRepository;
+public class AppointmentService {
+	private AppointmentRepository appointmentRepository;
 	private PatientRepository patientRepository;
 
 	@Autowired
-	public ToothService(ToothRepository toothRepository, PatientRepository patientRepository) {
-		this.toothRepository = toothRepository;
+	public AppointmentService(AppointmentRepository appointmentRepository, PatientRepository patientRepository) {
+		this.appointmentRepository = appointmentRepository;
 		this.patientRepository = patientRepository;
 	}
-
-	public Tooth addTooth(Long id, Tooth tooth) throws PatientNotFoundException {
+	
+	public Appointment addAppointment(Long id, Appointment appointment) throws PatientNotFoundException {
 		Patient patient = patientRepository.findById(id)
 				.orElseThrow(()-> new PatientNotFoundException("Пациент с id " + id + " не найден"));
-		tooth.setPatient(patient);
+		appointment.setPatient(patient);
 		
-		return toothRepository.save(tooth);
+		return appointmentRepository.save(appointment);
 	}
+
 	
+	
+	
+
 }
