@@ -2,6 +2,7 @@ package kz.saparov.dental.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -16,6 +17,7 @@ import kz.saparov.dental.entity.Patient;
 import kz.saparov.dental.exception.PatientNotFoundException;
 import kz.saparov.dental.service.PatientService;
 
+@CrossOrigin("*")
 @RestController
 @RequestMapping("/patients")
 public class PatientController {

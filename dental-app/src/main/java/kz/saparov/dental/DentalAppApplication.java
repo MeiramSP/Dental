@@ -9,12 +9,4 @@ public class DentalAppApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(DentalAppApplication.class, args);
 	}
-	
-	/*
-	 * netstat -ano | findstr 8080
-	 * 
-	 * taskkill /F /PID xx
-	 * 
-	 */
-
 }

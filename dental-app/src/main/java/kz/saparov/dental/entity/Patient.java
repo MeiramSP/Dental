@@ -1,9 +1,9 @@
 package kz.saparov.dental.entity;
 
 import java.time.LocalDate;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -35,9 +35,10 @@ public class Patient {
 	@Column(name="birth_date", columnDefinition = "DATE")
 	private LocalDate birthDate;
 	
-	@OneToMany( mappedBy = "patient", fetch = FetchType.LAZY)
-	private Set<Tooth> teeth = new HashSet<>();
 	
+	@OneToMany(mappedBy = "patient", fetch = FetchType.LAZY, cascade=CascadeType.ALL)
+	//@JsonIgnore
+	private List<Tooth> teeth;
 	
 	public Patient() {}
 	
@@ -90,11 +91,11 @@ public class Patient {
 		this.birthDate = birthDate;
 	}
 
-	public Set<Tooth> getTeeth() {
+	public List<Tooth> getTeeth() {
 		return teeth;
 	}
 
-	public void setTeeth(Set<Tooth> teeth) {
+	public void setTeeth(List<Tooth> teeth) {
 		this.teeth = teeth;
 	}
 }
