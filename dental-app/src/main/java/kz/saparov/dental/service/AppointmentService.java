@@ -1,13 +1,17 @@
 package kz.saparov.dental.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import kz.saparov.dental.entity.Appointment;
 import kz.saparov.dental.entity.Patient;
+import kz.saparov.dental.exception.AppointmentsNotFoundException;
 import kz.saparov.dental.exception.PatientNotFoundException;
 import kz.saparov.dental.repository.AppointmentRepository;
 import kz.saparov.dental.repository.PatientRepository;
+import kz.saparov.dental.util.AppointmentFinder;
 
 @Service
 public class AppointmentService {
@@ -26,6 +30,14 @@ public class AppointmentService {
 		appointment.setPatient(patient);
 		
 		return appointmentRepository.save(appointment);
+	}
+	
+	public List<Appointment> findByPeriod(AppointmentFinder finder) throws AppointmentsNotFoundException {
+		
+		List<Appointment> appointments = appointmentRepository.findByDateTimeBetween(finder.getStartDate(), finder.getEndDate());
+		if(appointments.isEmpty())
+			throw new AppointmentsNotFoundException("Записи не найдены");
+		return appointments;
 	}
 
 	

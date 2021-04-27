@@ -8,8 +8,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import kz.saparov.dental.entity.Appointment;
+import kz.saparov.dental.exception.AppointmentsNotFoundException;
 import kz.saparov.dental.exception.PatientNotFoundException;
 import kz.saparov.dental.service.AppointmentService;
+import kz.saparov.dental.util.AppointmentFinder;
 
 @RestController
 @RequestMapping("/appointments")
@@ -29,5 +31,15 @@ public class AppointmentController {
 		} catch (PatientNotFoundException e) {
 			return ResponseEntity.badRequest().body(e.getMessage());
 		}
+	}
+	
+	@PostMapping
+	public ResponseEntity<Object> findRecords(@RequestBody AppointmentFinder finder) {
+		try {
+			return ResponseEntity.ok(appointmentService.findByPeriod(finder));
+		} catch (AppointmentsNotFoundException e) {
+			return ResponseEntity.badRequest().body(e.getMessage());
+		}
+		
 	}
 }
