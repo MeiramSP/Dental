@@ -1,4 +1,4 @@
-package kz.saparov.dental.util;
+package kz.saparov.dental.entity;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 

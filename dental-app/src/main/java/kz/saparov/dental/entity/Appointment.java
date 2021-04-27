@@ -15,7 +15,7 @@ import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-import kz.saparov.dental.util.AppointmentStatus;
+import kz.saparov.dental.entity.AppointmentStatus;
 
 @Entity
 @Table(name="appointments")
