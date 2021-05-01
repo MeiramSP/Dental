@@ -1,5 +1,6 @@
 package kz.saparov.dental.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,7 +8,6 @@ import org.springframework.stereotype.Service;
 
 import kz.saparov.dental.entity.Appointment;
 import kz.saparov.dental.entity.Patient;
-import kz.saparov.dental.exception.AppointmentsNotFoundException;
 import kz.saparov.dental.exception.PatientNotFoundException;
 import kz.saparov.dental.repository.AppointmentRepository;
 import kz.saparov.dental.repository.PatientRepository;
@@ -24,24 +24,18 @@ public class AppointmentService {
 		this.patientRepository = patientRepository;
 	}
 	
-	public Appointment addAppointment(Long id, Appointment appointment) throws PatientNotFoundException {
+	public Appointment addAppointment(Long id, Appointment appointment) {
+		
 		Patient patient = patientRepository.findById(id)
-				.orElseThrow(()-> new PatientNotFoundException("Пациент с id " + id + " не найден"));
+				.orElseThrow(()-> new PatientNotFoundException());
 		appointment.setPatient(patient);
 		
 		return appointmentRepository.save(appointment);
 	}
 	
-	public List<Appointment> findByPeriod(AppointmentFinder finder) throws AppointmentsNotFoundException {
-		
-		List<Appointment> appointments = appointmentRepository.findByDateTimeBetween(finder.getStartDate(), finder.getEndDate());
-		if(appointments.isEmpty())
-			throw new AppointmentsNotFoundException("Записи не найдены");
+	public List<Appointment> findByPeriod(AppointmentFinder finder){
+		List<Appointment> appointments = new ArrayList<>();
+		appointments = appointmentRepository.findByDateTimeBetween(finder.getStartDate(), finder.getEndDate());
 		return appointments;
 	}
-
-	
-	
-	
-
 }

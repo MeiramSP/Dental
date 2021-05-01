@@ -21,9 +21,9 @@ public class ToothService {
 		this.patientRepository = patientRepository;
 	}
 
-	public Tooth addTooth(Long id, Tooth tooth) throws PatientNotFoundException {
+	public Tooth addTooth(Long id, Tooth tooth) {
 		Patient patient = patientRepository.findById(id)
-				.orElseThrow(()-> new PatientNotFoundException("Пациент с id " + id + " не найден"));
+				.orElseThrow(()-> new PatientNotFoundException());
 		tooth.setPatient(patient);
 		
 		return toothRepository.save(tooth);

@@ -1,6 +1,7 @@
 package kz.saparov.dental.service;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import java.util.List;
+
 import org.springframework.stereotype.Service;
 
 import kz.saparov.dental.entity.Patient;
@@ -12,16 +13,14 @@ public class PatientService {
 	
 	private PatientRepository patientRepository;
 
-	@Autowired
 	public PatientService(PatientRepository patientRepository) {
 		this.patientRepository = patientRepository;
 	}
 	
 	// find patient by id
-	public Patient getPatient(Long id) throws PatientNotFoundException {
+	public Patient getPatient(Long id) {
 		Patient patient = patientRepository.findById(id)
-				.orElseThrow(()->new PatientNotFoundException("Пациент с id " + id + " не найден"));
-		
+				.orElseThrow(()->new PatientNotFoundException());
 		return patient;
 	}
 	
@@ -31,23 +30,25 @@ public class PatientService {
 	}
 	
 	// update patient info
-	public Patient updatePatient(Long id, Patient upPatient) throws PatientNotFoundException {
+	public Patient updatePatient(Long id, Patient upPatient) {
 		
 		Patient patient = patientRepository.findById(id)
-				.orElseThrow(()->new PatientNotFoundException("Пациент с id " + id + " не найден"));
+				.orElseThrow(()->new PatientNotFoundException());
 		
 		patient.setName(upPatient.getName());
 		patient.setLastName(upPatient.getLastName());
 		patient.setPatronymic(upPatient.getPatronymic());
 		patient.setAddress(upPatient.getAddress());
 		patient.setBirthDate(upPatient.getBirthDate());
-		
 		return patientRepository.save(patient);
 	}
-	
 	
 	public Long deletePatient(Long id) {
 		patientRepository.deleteById(id);
 		return id;
+	}
+	
+	public List<Patient> searchPatient (String param){
+		return patientRepository.findByNameIgnoreCaseContaining(param);
 	}
 }
