@@ -48,7 +48,8 @@ public class PatientService {
 		return id;
 	}
 	
-	public List<Patient> searchPatient (String param){
-		return patientRepository.findByNameIgnoreCaseContaining(param);
+	public List<Patient> searchPatient (String search){
+		return patientRepository.findByNameIgnoreCaseContainingOrLastNameIgnoreCaseContainingOrPatronymicIgnoreCaseContaining(search, search, search);
+		
 	}
 }

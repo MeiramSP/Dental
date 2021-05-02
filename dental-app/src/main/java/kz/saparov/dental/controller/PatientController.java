@@ -51,5 +51,4 @@ public class PatientController {
 	public List<Patient> searchPatient(@RequestParam String param) {
 		return patientService.searchPatient(param);
 	}
-	
 }
