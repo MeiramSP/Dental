@@ -6,6 +6,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -14,8 +15,6 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-
-import kz.saparov.dental.entity.AppointmentStatus;
 
 @Entity
 @Table(name="appointments")
@@ -34,7 +33,7 @@ public class Appointment {
 	@Enumerated(EnumType.STRING)
 	private AppointmentStatus status;
 	
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "patient_id")
 	@JsonIgnore
 	private Patient patient;
@@ -81,3 +80,4 @@ public class Appointment {
 		this.patient = patient;
 	}
 }
+

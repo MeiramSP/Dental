@@ -21,12 +21,11 @@ public class ToothService {
 		this.patientRepository = patientRepository;
 	}
 
-	public Tooth addTooth(Long id, Tooth tooth) {
+	public Tooth saveOrUpdateTooth(Long id, Tooth tooth) {
+		
 		Patient patient = patientRepository.findById(id)
 				.orElseThrow(()-> new PatientNotFoundException());
 		tooth.setPatient(patient);
-		
 		return toothRepository.save(tooth);
 	}
-	
 }

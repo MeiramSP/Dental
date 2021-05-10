@@ -2,6 +2,7 @@ package kz.saparov.dental.entity;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -24,7 +25,7 @@ public class Tooth {
 	@Column(name="comment", length=250)
 	private String comment;
 	
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "patient_id")
 	@JsonIgnore
 	private Patient patient;

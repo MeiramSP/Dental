@@ -1,12 +1,12 @@
 package kz.saparov.dental.entity;
 
 import java.time.LocalDate;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -36,14 +36,13 @@ public class Patient {
 	private LocalDate birthDate;
 	
 	
-	@OneToMany(mappedBy = "patient", fetch = FetchType.LAZY, cascade=CascadeType.ALL)
-	private List<Tooth> teeth;
+	@OneToMany(mappedBy = "patient", cascade=CascadeType.ALL)
+	private Set<Tooth> teeth = new HashSet<>();
 	
-	@OneToMany(mappedBy = "patient", fetch = FetchType.LAZY, cascade=CascadeType.ALL)
-	private List<Appointment> appointments; 
+	@OneToMany(mappedBy = "patient", cascade=CascadeType.ALL)
+	private Set<Appointment> appointments = new HashSet<>();
 	
 	public Patient() {}
-	
 	
 	public Long getId() {
 		return id;
@@ -93,20 +92,19 @@ public class Patient {
 		this.birthDate = birthDate;
 	}
 
-	public List<Tooth> getTeeth() {
+	public Set<Tooth> getTeeth() {
 		return teeth;
 	}
 
-	public void setTeeth(List<Tooth> teeth) {
+	public void setTeeth(Set<Tooth> teeth) {
 		this.teeth = teeth;
 	}
 
-	public List<Appointment> getAppointments() {
+	public Set<Appointment> getAppointments() {
 		return appointments;
 	}
 
-	public void setAppointments(List<Appointment> appointments) {
+	public void setAppointments(Set<Appointment> appointments) {
 		this.appointments = appointments;
 	}
-	
 }

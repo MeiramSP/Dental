@@ -17,11 +17,9 @@ public class ToothController {
 		this.toothService = toothService;
 	}
 	
-	@PostMapping("/teeth/{id}")
-	public String saveTooth(@PathVariable Long id, @RequestBody Tooth tooth) {
-		toothService.addTooth(id, tooth);
-		return "Данные обновлены";
-			
+	@PostMapping("/patients/{id}/teeth")
+	public Tooth saveTooth(@PathVariable Long id, @RequestBody Tooth tooth) {
+		return toothService.saveOrUpdateTooth(id, tooth);
 	}
-	
 }
+
