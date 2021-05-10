@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import kz.saparov.dental.dto.patient.PatientDto;
 import kz.saparov.dental.entity.Patient;
 import kz.saparov.dental.service.PatientService;
 
@@ -30,8 +31,13 @@ public class PatientController {
 		return patientService.addPatient(patient);	
 	}
 	
+	@GetMapping("/patients") 
+	public List<PatientDto> searchPatient(@RequestParam String param) {
+		return patientService.searchPatient(param);
+	}
+	
 	@GetMapping("/patients/{id}")
-	public Patient findPatient(@PathVariable Long id) {
+	public PatientDto findPatient(@PathVariable Long id) {
 		return patientService.getPatient(id);
 	}
 	
@@ -45,10 +51,5 @@ public class PatientController {
 	public String deletePatient(@PathVariable Long id) {
 		patientService.deletePatient(id);
 		return "Пациент успешно удален";
-	}
-	
-	@GetMapping("/patients") 
-	public List<Patient> searchPatient(@RequestParam String param) {
-		return patientService.searchPatient(param);
 	}
 }
